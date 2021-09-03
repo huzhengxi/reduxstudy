@@ -26,12 +26,12 @@ export default class ToDoList extends Component {
                     />
                     <Button type="primary" onClick={this.addItemToList}>增加</Button>
                 </div>
-                <div style={{marginTop: '10px', width: '300px'}}>
+                <div style={{marginTop: '10px', width: '300px'}} >
                     <List
                         bordered
                         dataSource={this.state.list}
                         renderItem={item => (
-                            <List.Item>
+                            <List.Item >
                                 {item}
                             </List.Item>
                         )}
