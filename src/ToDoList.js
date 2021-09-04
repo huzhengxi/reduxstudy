@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';
 import store from './redux/store';
-import {addItemToListActiion, changeInputValueAction, itemClickAction} from './redux/action/actionsCreator';
+import {
+    addItemToListActiion,
+    changeInputValueAction,
+    getListBySaga,
+    itemClickAction
+} from './redux/action/actionsCreator';
 import ToDoListUI from './ToDoListUI';
 
 export default class ToDoList extends Component {
@@ -9,9 +14,16 @@ export default class ToDoList extends Component {
     constructor(props) {
         super(props);
         this.state = store.getState();
-        this.changeInputValue = this.changeInputValue.bind(this);
-        this.storeChange = this.storeChange.bind(this);
         store.subscribe(this.storeChange);
+    }
+
+    componentDidMount() {
+        this.mounted = true;
+        this.getList();
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     render() {
@@ -21,18 +33,19 @@ export default class ToDoList extends Component {
                 changeInputValue={this.changeInputValue}
                 addItemToList={this.addItemToList}
                 itemClick={this.itemClick}
+                getList={this.getList}
                 list={this.state.list}
             />
         );
     }
 
-    changeInputValue(e) {
+    changeInputValue = (e) => {
         store.dispatch(changeInputValueAction(e.target.value));
-    }
+    };
 
-    storeChange() {
+    storeChange = () => {
         this.setState(store.getState());
-    }
+    };
 
     addItemToList = () => {
         store.dispatch(addItemToListActiion());
@@ -40,5 +53,9 @@ export default class ToDoList extends Component {
 
     itemClick = (index) => {
         store.dispatch(itemClickAction(index));
+    };
+
+    getList = () => {
+        store.dispatch(getListBySaga());
     };
 }

@@ -1,4 +1,4 @@
-import {Button, Input, List} from 'antd';
+import {Button, Input, List, Spin} from 'antd';
 import React from 'react';
 
 const ToDoListUI = (props) => {
@@ -11,6 +11,7 @@ const ToDoListUI = (props) => {
                 value={props.inputValue}
             />
             <Button type="primary" onClick={props.addItemToList}>增加</Button>
+            <Button type="primary" style={{marginLeft: '20px'}} onClick={props.getList}>获取数据</Button>
         </div>
         <div style={{marginTop: '10px', width: '300px'}}>
             <List
