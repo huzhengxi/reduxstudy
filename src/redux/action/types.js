@@ -1,6 +1,7 @@
 const ActionTypes = {
     InputChangeValue: 'changeInput',
-    AddItem: 'AddItem'
+    AddItem: 'AddItem',
+    DeleteItem: 'DeleteItem'
 };
 
 export default ActionTypes;

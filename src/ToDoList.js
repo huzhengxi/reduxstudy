@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Input, List} from 'antd';
 import 'antd/dist/antd.css';
-import store from './store';
-import ActionTypes from './store/types';
+import store from './redux/store';
+import {addItemToListActiion, changeInputValueAction, itemClickAction} from './redux/action/actionsCreator';
+import ToDoListUI from './ToDoListUI';
 
 export default class ToDoList extends Component {
 
@@ -16,37 +16,18 @@ export default class ToDoList extends Component {
 
     render() {
         return (
-            <div style={{margin: '10px'}}>
-                <div>
-                    <Input
-                        placeholder={this.state.inputValue}
-                        style={{width: '250px', marginRight: 20}}
-                        onChange={this.changeInputValue}
-                        value={this.state.inputValue}
-                    />
-                    <Button type="primary" onClick={this.addItemToList}>增加</Button>
-                </div>
-                <div style={{marginTop: '10px', width: '300px'}} >
-                    <List
-                        bordered
-                        dataSource={this.state.list}
-                        renderItem={item => (
-                            <List.Item >
-                                {item}
-                            </List.Item>
-                        )}
-                    />
-                </div>
-            </div>
+            <ToDoListUI
+                inputValue={this.state.inputValue}
+                changeInputValue={this.changeInputValue}
+                addItemToList={this.addItemToList}
+                itemClick={this.itemClick}
+                list={this.state.list}
+            />
         );
     }
 
     changeInputValue(e) {
-        const action = {
-            type: ActionTypes.InputChangeValue,
-            value: e.target.value
-        };
-        store.dispatch(action);
+        store.dispatch(changeInputValueAction(e.target.value));
     }
 
     storeChange() {
@@ -54,8 +35,10 @@ export default class ToDoList extends Component {
     }
 
     addItemToList = () => {
-        store.dispatch({
-            type: ActionTypes.AddItem,
-        });
+        store.dispatch(addItemToListActiion());
+    };
+
+    itemClick = (index) => {
+        store.dispatch(itemClickAction(index));
     };
 }

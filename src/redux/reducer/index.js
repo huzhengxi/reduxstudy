@@ -1,8 +1,8 @@
-import ActionTypes from './types';
+import ActionTypes from '../action/types';
 
 
 const defaultInputValue = 'Write Something';
-const defaultState = {
+export const defaultState = {
     inputValue: defaultInputValue,
     list: [
         '8点开晨会，分配今天的代码任务',
@@ -25,6 +25,10 @@ export default (state = defaultState, action) => {
                 list: [...list, inputValue],
                 inputValue: defaultInputValue
             };
+        case ActionTypes.DeleteItem:
+            const newState = {...state};
+            newState.list.splice(action.index, 1);
+            return newState;
         default:
             return state;
     }
